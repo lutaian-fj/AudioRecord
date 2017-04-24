@@ -10,7 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import lta.com.audioRecord.ui.common.ExitHandler;
+import lta.com.audioRecord.common.ExitHandler;
 
 /**
  * @author: LuTaiAn

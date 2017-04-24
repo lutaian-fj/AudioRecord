@@ -1,4 +1,4 @@
-package lta.com.audioRecord.ui.common;
+package lta.com.audioRecord.common;
 
 import android.os.Handler;
 import android.os.Message;
