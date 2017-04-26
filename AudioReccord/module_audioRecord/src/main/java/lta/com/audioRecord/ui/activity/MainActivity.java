@@ -7,6 +7,8 @@ import android.widget.TextView;
 import java.io.File;
 
 import lta.com.audioRecord.R;
+import lta.com.audioRecord.data.db.dao.RecordDao;
+import lta.com.audioRecord.data.db.model.RecordModel;
 import lta.com.audioRecord.utils.AudioRecordUtil;
 
 /**
@@ -39,6 +41,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void initData() {
         mOutFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/AudioRecord");
         mAudioRecordUtil = AudioRecordUtil.getInstance(mOutFile);
+        RecordModel model = new RecordModel();
+        model.setRecordName("第一条录音数据");
+        model.setId("1");
+        model.setRecordLength("12346");
+        RecordDao.getInstance().createOrUpdate(model);
     }
 
     @Override
