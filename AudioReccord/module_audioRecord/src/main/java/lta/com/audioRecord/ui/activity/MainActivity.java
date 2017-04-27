@@ -2,7 +2,6 @@ package lta.com.audioRecord.ui.activity;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,7 +54,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         List<RecordModel> records = RecordDao.getInstance().queryAll();
         RecordItemView recordView;
         for (RecordModel record : records) {
-            Log.e("LTA",record.getRecordName());
             recordView = new RecordItemView(mContent,record);
             mRecordLayout.addView(recordView);
         }

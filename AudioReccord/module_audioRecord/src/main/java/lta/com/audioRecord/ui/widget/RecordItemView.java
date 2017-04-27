@@ -16,6 +16,11 @@ import lta.com.audioRecord.data.db.model.RecordModel;
 import lta.com.audioRecord.utils.AudioPlayerUtil;
 import lta.com.audioRecord.utils.AudioUtil;
 import lta.com.audioRecord.utils.TimeUtil;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * @author: LuTaiAn
@@ -85,9 +90,21 @@ public class RecordItemView extends LinearLayout implements View.OnClickListener
             if(mPlayer == null) {
                 mPlayer = new AudioPlayerUtil(mContext);
             }
-            String recordName = mRecordModel.getRecordName();
-            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/AudioRecord",recordName);
-            mPlayer.play(file);
+
+            Observable.create(new Observable.OnSubscribe<Object>(){
+                @Override
+                public void call(Subscriber<? super Object> subscriber) {
+                    String recordName = mRecordModel.getRecordName();
+                    File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/AudioRecord",recordName);
+                    mPlayer.play(file);
+                }
+            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Object>() {
+                        @Override
+                        public void call(Object o) {
+
+                        }
+                    });
         }
     }
 }
