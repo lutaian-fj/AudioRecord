@@ -52,10 +52,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mOutFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/AudioRecord");
         mAudioRecordUtil = AudioRecordUtil.getInstance(mOutFile);
         List<RecordModel> records = RecordDao.getInstance().queryAll();
-        RecordItemView recordView;
         for (RecordModel record : records) {
-            recordView = new RecordItemView(mContent,record);
-            mRecordLayout.addView(recordView);
+            addRecordView(record);
         }
     }
 
@@ -87,7 +85,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     /**
      * 保存数据到数据库
-     *
      * @param: recordName
      * @param: recordLength
      * @return:
@@ -98,6 +95,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         model.setId(System.currentTimeMillis() + "");
         model.setRecordLength(recordLength);
         model.setCreateTime(System.currentTimeMillis());
+        addRecordView(model);
         RecordDao.getInstance().createOrUpdate(model);
+    }
+
+    /**
+     * 添加录音布局
+     * @param: recordModel
+     * @return:
+     */
+    private void addRecordView(RecordModel recordModel) {
+        RecordItemView recordView = new RecordItemView(mContent, recordModel);
+        mRecordLayout.addView(recordView, 0);
     }
 }
