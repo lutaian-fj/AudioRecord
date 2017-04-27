@@ -12,6 +12,24 @@ import android.graphics.drawable.Drawable;
  */
 public class AudioUtil {
 
+    /**
+     * 格式化时间为 mm'ss'
+     * @param:  time
+     * @return:
+     */
+    public static String formatToAudioShowTime(long time) {
+        StringBuffer stringBuffer = new StringBuffer();
+        //long hour = time / (3600*1000);
+        long minute = time / (60 * 1000);
+        long second = (time - minute * 60 * 1000) / 1000;
+        stringBuffer.append(String.format("%d", minute));
+        stringBuffer.append("'");
+        stringBuffer.append(String.format("%02d", second));
+        stringBuffer.append("\"");
+        // String formatTime = formatter.format(date);
+        return stringBuffer.toString();
+    }
+
     /**播放动画
      * @param mContext
      * @return

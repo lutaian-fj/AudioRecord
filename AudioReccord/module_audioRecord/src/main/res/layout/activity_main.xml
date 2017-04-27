@@ -4,6 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="lta.com.audioRecord.ui.activity.MainActivity">
+    <LinearLayout
+        android:id="@+id/ll_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
     <TextView
         android:id="@+id/tv_play"
         android:layout_width="50dp"

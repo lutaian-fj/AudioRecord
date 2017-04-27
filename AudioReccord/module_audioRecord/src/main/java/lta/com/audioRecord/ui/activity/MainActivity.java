@@ -1,14 +1,19 @@
 package lta.com.audioRecord.ui.activity;
 
+import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.List;
 
 import lta.com.audioRecord.R;
 import lta.com.audioRecord.data.db.dao.RecordDao;
 import lta.com.audioRecord.data.db.model.RecordModel;
+import lta.com.audioRecord.ui.widget.RecordItemView;
 import lta.com.audioRecord.utils.AudioRecordUtil;
 
 /**
@@ -18,12 +23,16 @@ import lta.com.audioRecord.utils.AudioRecordUtil;
  * @date: 2017/4/25
  */
 public class MainActivity extends BaseActivity implements View.OnClickListener {
+    private Context mContent; //上下文
     private AudioRecordUtil mAudioRecordUtil; //工具类
     private File mOutFile; //录音存放文件夹
     private int startBgRes = R.drawable.start_record_audio_selector; //开始录音背景
     private int stopBgRes = R.drawable.start_record_audio_big_selector; //停止录音背景
     private TextView mTvPlay; //录音开启关闭按钮
     private boolean mIsRecording = false; //是否正在录音
+    private long mRecordLength = 0; //录音时长
+    private String mRecordName = ""; //录音文件名
+    private LinearLayout mRecordLayout; //录音列表布局
 
     @Override
     protected int getLayoutRes() {
@@ -35,17 +44,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mTvPlay = (TextView) findViewById(R.id.tv_play);
         mTvPlay.setOnClickListener(this);
         mTvPlay.setBackgroundResource(startBgRes);
+        mRecordLayout = (LinearLayout) findViewById(R.id.ll_record);
     }
 
     @Override
     protected void initData() {
+        mContent = this;
         mOutFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/AudioRecord");
         mAudioRecordUtil = AudioRecordUtil.getInstance(mOutFile);
-        RecordModel model = new RecordModel();
-        model.setRecordName("第一条录音数据");
-        model.setId("1");
-        model.setRecordLength("12346");
-        RecordDao.getInstance().createOrUpdate(model);
+        List<RecordModel> records = RecordDao.getInstance().queryAll();
+        RecordItemView recordView;
+        for (RecordModel record : records) {
+            Log.e("LTA",record.getRecordName());
+            recordView = new RecordItemView(mContent,record);
+            mRecordLayout.addView(recordView);
+        }
     }
 
     @Override
@@ -61,12 +74,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 mAudioRecordUtil.stopRecord();
                 mIsRecording = false;
                 mTvPlay.setBackgroundResource(startBgRes);
+                mRecordLength = System.currentTimeMillis() - mRecordLength;
+                saveDataToDB(mRecordName, mRecordLength);
                 return;
             }
-            String fileName = System.currentTimeMillis() + "record.amr";
-            mAudioRecordUtil.startRecord(fileName);
+            long currentMillis = System.currentTimeMillis();
+            mRecordLength = currentMillis;
+            mRecordName = currentMillis + "record.amr";
+            mAudioRecordUtil.startRecord(mRecordName);
             mTvPlay.setBackgroundResource(stopBgRes);
             mIsRecording = true;
         }
+    }
+
+    /**
+     * 保存数据到数据库
+     *
+     * @param: recordName
+     * @param: recordLength
+     * @return:
+     */
+    public void saveDataToDB(String recordName, long recordLength) {
+        RecordModel model = new RecordModel();
+        model.setRecordName(recordName);
+        model.setId(System.currentTimeMillis() + "");
+        model.setRecordLength(recordLength);
+        model.setCreateTime(System.currentTimeMillis());
+        RecordDao.getInstance().createOrUpdate(model);
     }
 }

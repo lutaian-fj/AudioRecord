@@ -17,7 +17,7 @@ public class RecordModel extends BaseModel {
     private String recordName; //录音文件名
     @DatabaseField(columnName = "record_length", useGetSet = true)
     @Expose
-    private String recordLength; //录音长度
+    private long recordLength; //录音长度
 
     public String getRecordName() {
         return recordName;
@@ -27,11 +27,11 @@ public class RecordModel extends BaseModel {
         this.recordName = recordName;
     }
 
-    public String getRecordLength() {
+    public long getRecordLength() {
         return recordLength;
     }
 
-    public void setRecordLength(String recordLength) {
+    public void setRecordLength(long recordLength) {
         this.recordLength = recordLength;
     }
 }
