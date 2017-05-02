@@ -2,6 +2,7 @@ package lta.com.audioRecord.ui.widget;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.View;
@@ -83,6 +84,15 @@ public class RecordItemView extends LinearLayout implements View.OnClickListener
         mTvAudioTime.setText(AudioUtil.formatToAudioShowTime(mRecordModel.getRecordLength()));
     }
 
+    /**
+     * 设置播放按钮背景
+     * @param:
+     * @return:
+     */
+    public void setPlayIconStop() {
+        mTvAudioPlay.setBackgroundResource(R.mipmap.audio_play0);
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -90,13 +100,21 @@ public class RecordItemView extends LinearLayout implements View.OnClickListener
             if(mPlayer == null) {
                 mPlayer = new AudioPlayerUtil(mContext);
             }
-
+            mTvAudioPlay.setBackgroundDrawable(animationDrawable);
+            animationDrawable.start();
             Observable.create(new Observable.OnSubscribe<Object>(){
                 @Override
                 public void call(Subscriber<? super Object> subscriber) {
                     String recordName = mRecordModel.getRecordName();
                     File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/AudioRecord",recordName);
                     mPlayer.play(file);
+                    mPlayer.setCompleteListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            animationDrawable.stop();
+                            setPlayIconStop();
+                        }
+                    });
                 }
             }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Action1<Object>() {

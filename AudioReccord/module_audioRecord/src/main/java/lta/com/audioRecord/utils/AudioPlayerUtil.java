@@ -20,7 +20,12 @@ public class AudioPlayerUtil {
 	public AudioPlayerUtil(Context context){
 		mContext = context;
 	}
-	
+
+	/**
+	 * 开始播放
+	 * @param:
+	 * @return:
+	 */
 	public void play(File file){
 		if (file!=null && file.exists()) {
 			Uri uri = Uri.fromFile(file);
@@ -34,11 +39,25 @@ public class AudioPlayerUtil {
 			});
 		}
 	}
-	
+
+	/**
+	 * 停止播放
+	 * @param:
+	 * @return:
+	 */
 	public void stopPlayer(){
 		if(mMediaPlayer.isPlaying()){
 			mMediaPlayer.stop();
 			mMediaPlayer.release();
 		}
+	}
+
+	/**
+	 * 设置播放结束监听器
+	 * @param: listener
+	 * @return:
+	 */
+	public void setCompleteListener(MediaPlayer.OnCompletionListener listener) {
+		mMediaPlayer.setOnCompletionListener(listener);
 	}
 }
