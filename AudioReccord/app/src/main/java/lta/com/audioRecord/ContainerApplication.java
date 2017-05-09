@@ -2,6 +2,8 @@ package lta.com.audioRecord;
 
 import android.app.Application;
 
+import com.iflytek.cloud.SpeechUtility;
+
 import lta.com.audioRecord.utils.AppContextUtils;
 
 /**
@@ -15,5 +17,6 @@ public class ContainerApplication extends Application {
     public void onCreate() {
         super.onCreate();
         AppContextUtils.init(getApplicationContext());
+        SpeechUtility.createUtility(ContainerApplication.this, "appid=590edd12");
     }
 }

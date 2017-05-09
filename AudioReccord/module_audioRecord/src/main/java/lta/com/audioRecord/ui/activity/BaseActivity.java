@@ -91,7 +91,7 @@ public class BaseActivity extends AppCompatActivity {
      * @param: text
      * @return:
      */
-    protected void toast(CharSequence text) {
+    protected void showTip(CharSequence text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
@@ -110,7 +110,7 @@ public class BaseActivity extends AppCompatActivity {
         }else {
             mExitHandler.sendEmptyMessage(ExitHandler.EXIT_MSG_WHAT);
             mExitHandler.sendEmptyMessageDelayed(ExitHandler.EXIT_MSG_OUT_TIME_WHAT, EXIT_TIME_DELAY);
-            toast("再次点击返回键退出");
+            showTip("再次点击返回键退出");
         }
     }
 

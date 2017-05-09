@@ -98,13 +98,20 @@ public class RecordItemView extends LinearLayout implements View.OnClickListener
         int id = view.getId();
         if(id == R.id.tv_audio_play) { //播放录音
             if(mPlayer == null) {
-                mPlayer = new AudioPlayerUtil(mContext);
+                mPlayer = AudioPlayerUtil.getInstance(mContext);
             }
             mTvAudioPlay.setBackgroundDrawable(animationDrawable);
             animationDrawable.start();
             Observable.create(new Observable.OnSubscribe<Object>(){
                 @Override
                 public void call(Subscriber<? super Object> subscriber) {
+//                    mPlayer.stopPlayer(new OnStopCallPack(){
+//                        @Override
+//                        public void onStopCallBack() {
+//                            animationDrawable.stop();
+////                            setPlayIconStop();
+//                        }
+//                    });
                     String recordName = mRecordModel.getRecordName();
                     File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/AudioRecord",recordName);
                     mPlayer.play(file);
