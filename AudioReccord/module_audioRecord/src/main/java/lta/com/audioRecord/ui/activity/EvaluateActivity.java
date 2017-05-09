@@ -16,6 +16,8 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechEvaluator;
 
 import lta.com.audioRecord.R;
+import lta.com.audioRecord.data.entity.Result;
+import lta.com.audioRecord.utils.XmlResultParser;
 
 /**
  * @author: LuTaiAn
@@ -68,9 +70,14 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
             mSpeechEvaluator.startEvaluating("今天天气真不错", null, mEvaluatorListener);
             return;
         } else if (id == R.id.btn_stop) { //停止
-
+            if(mSpeechEvaluator.isEvaluating()) {
+                mSpeechEvaluator.stopEvaluating();
+            }
+            return;
         } else if (id == R.id.btn_parse) { //解析
-
+            XmlResultParser resultParser = new XmlResultParser();
+            Result result = resultParser.parse(mLastResult);
+            showTip("本次得分为:"+result.total_score);
         } else if (id == R.id.btn_cancel) { //取消
 
         }
@@ -92,7 +99,8 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
         // 设置音频保存路径，保存音频格式支持pcm、wav，设置路径为sd卡请注意WRITE_EXTERNAL_STORAGE权限
         // 注：AUDIO_FORMAT参数语记需要更新版本才能生效
         mSpeechEvaluator.setParameter(SpeechConstant.AUDIO_FORMAT, "wav");
-        mSpeechEvaluator.setParameter(SpeechConstant.ISE_AUDIO_PATH, Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhiliaoyinsong/ise.wav");
+        String fileName = System.currentTimeMillis()+"";
+        mSpeechEvaluator.setParameter(SpeechConstant.ISE_AUDIO_PATH, Environment.getExternalStorageDirectory().getAbsolutePath() + "/zhiliaoyinsong/"+fileName+".wav");
     }
 
     // 评测监听接口
@@ -111,7 +119,6 @@ public class EvaluateActivity extends BaseActivity implements View.OnClickListen
                 }
 //                mIseStartButton.setEnabled(true);
                 mLastResult = builder.toString();
-
                 showTip("评测结束");
             }
         }
