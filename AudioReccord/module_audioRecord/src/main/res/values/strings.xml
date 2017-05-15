@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">My Library</string>
+    <string name="article">时光如流水，带着青春的梦缓缓流过，也带着岁月的体会和感受。水边的树木都在一分一秒中变换着春天的颜色。就像这在一分一秒中流逝的青春时光。如果今生只能实现一个愿望，我愿在这每时每刻里，你美丽如水的青春流淌在我心间。让这世间最美丽的风景，伴我天涯每天。</string>
+    <string name="tip">提示</string>
+    <string name="delete_record_tip">确定要删除录音？</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
 </resources>

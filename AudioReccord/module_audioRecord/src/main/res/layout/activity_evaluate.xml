@@ -9,35 +9,68 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="lta.com.audioRecord.ui.activity.EvaluateActivity">
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_btn"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_article"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="@string/article"
+            android:textSize="40px" />
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fadingEdge="vertical"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_audio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/btn_start"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="评测"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="开始" />
+
         <Button
             android:id="@+id/btn_stop"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="停止"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="结束" />
+
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="取消"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="取消" />
+
         <Button
             android:id="@+id/btn_parse"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="解析"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="评分" />
     </LinearLayout>
 
 </RelativeLayout>

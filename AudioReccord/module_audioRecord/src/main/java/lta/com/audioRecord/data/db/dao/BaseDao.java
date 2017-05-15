@@ -46,7 +46,7 @@ public class BaseDao<T extends BaseModel> {
     }
 
     public int delete(T model) {
-        return mDao.update(model);
+        return mDao.delete(model);
     }
 
     public int deleteAll() {
@@ -82,7 +82,7 @@ public class BaseDao<T extends BaseModel> {
     }
 
     private Class<T> getTClass() {
-        return  (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
 }

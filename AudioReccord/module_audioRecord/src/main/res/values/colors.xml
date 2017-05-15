@@ -2,4 +2,9 @@
 <resources>
     <color name="white">#ffffff</color>
     <color name="base_blue_bg">#32baf1</color>
+    <color name="base_divider_color">#dedede</color>
+    <color name="text_color_gray">#b5b5b5</color>
+    <color name="common_text_color_black">#333333</color>
+    <color name="btn_text_color_gray">#5d6474</color>
+    <color name="transparent">#ff000000</color>
 </resources>
